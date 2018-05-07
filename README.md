@@ -6,5 +6,8 @@ MindMap project is Java Swing project.
 - Show node's attribute
 - Show node hierarchy
 
+[Swing Document Table of Contents](https://docs.oracle.com/javase/tutorial/uiswing/TOC.html)
 
-[Oracle Swing Tutorials](https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html)
+[Using Swing Components](https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html)
+
+[Writing Event Listeners](https://docs.oracle.com/javase/tutorial/uiswing/events/index.html)
