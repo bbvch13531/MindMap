@@ -60,15 +60,11 @@ public class TopLevelDemo {
         yellowLabel.setPreferredSize(new Dimension(200, 180));
 
         JButton button = new JButton("Hello Button!");
-        JPanel panel = new JPanel();
-        panel.add(button);
-
-        frame.setContentPane(panel);
-
+        
         //Set the menu bar and add the label to the content pane.
         frame.setJMenuBar(greenMenuBar);
         frame.getContentPane().add(yellowLabel, BorderLayout.CENTER);
-
+        frame.getContentPane().add(button, BorderLayout.PAGE_END);
         //Display the window.
         frame.pack();
         frame.setVisible(true);
