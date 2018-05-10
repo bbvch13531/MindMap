@@ -65,6 +65,7 @@ public class ButtonDemo extends JPanel
         b2 = new JButton("Middle button", middleButtonIcon);
         b2.setVerticalTextPosition(AbstractButton.BOTTOM);
         b2.setHorizontalTextPosition(AbstractButton.CENTER);
+        b2.setActionCommand("press");
         b2.setMnemonic(KeyEvent.VK_M);
 
         b3 = new JButton("Enable middle button", rightButtonIcon);
@@ -73,8 +74,9 @@ public class ButtonDemo extends JPanel
         b3.setActionCommand("enable");
         b3.setEnabled(false);
 
-        //Listen for actions on buttons 1 and 3.
+        //Listen for actions on buttons 1, 2, 3.
         b1.addActionListener(this);
+        b2.addActionListener(this);
         b3.addActionListener(this);
 
         b1.setToolTipText("Click this button to disable the middle button.");
@@ -89,13 +91,17 @@ public class ButtonDemo extends JPanel
 
     public void actionPerformed(ActionEvent e) {
         if ("disable".equals(e.getActionCommand())) {
+            System.out.println("disable");
             b2.setEnabled(false);
             b1.setEnabled(false);
             b3.setEnabled(true);
-        } else {
+        } else if("enable".equals(e.getActionCommand())){
+            System.out.println("enable");
             b2.setEnabled(true);
             b1.setEnabled(true);
             b3.setEnabled(false);
+        } else{
+            System.out.println("press");
         }
     }
 
