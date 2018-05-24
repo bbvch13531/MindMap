@@ -66,7 +66,7 @@ public class ListDialogRunner {
                         "Name Chooser",
                         names,
                         name.getText(),
-                        "Cosmo  ");
+                        "Arlo  ");
                 name.setText(selectedName);
             }
         });
