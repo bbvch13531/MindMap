@@ -11,3 +11,5 @@ MindMap project is Java Swing project.
 [Using Swing Components](https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html)
 
 [Writing Event Listeners](https://docs.oracle.com/javase/tutorial/uiswing/events/index.html)
+
+[Event Listener Examples](https://docs.oracle.com/javase/tutorial/uiswing/examples/events/index.html#MouseEventDemo)
