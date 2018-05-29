@@ -29,13 +29,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package Examples;
+package Demo;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
-import java.util.*;
 
 //SplitPaneDemo itself is not a visible component.
 public class SplitPaneDemo extends JPanel

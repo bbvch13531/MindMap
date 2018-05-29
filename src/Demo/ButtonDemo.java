@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package Examples;
+package Demo;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
