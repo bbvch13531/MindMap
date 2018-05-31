@@ -17,6 +17,10 @@ public class MindMap extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         createMenu();
         setBounds(100, 100, 1000, 700);
+
+        add(menuBar);
+        add(leftPane);
+        add(rightPane);
         setVisible(true);
     }
     void createMenu(){
@@ -57,7 +61,7 @@ public class MindMap extends JFrame{
                 title.add(menuItem[i]);// 메뉴 아이템을 스크린 메뉴에 삽입
             }
             this.add(title);
-            setJMenuBar(menuBar); // 메뉴바를 프레임에 부착.
+            setJMenuBar(this); // 메뉴바를 프레임에 부착.
             setVisible(true);
         }
     }
