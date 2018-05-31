@@ -1,0 +1,80 @@
+{
+  "text":"계절",
+  "x":"200",
+  "y":"200",
+  "width":"100",
+  "height":"50",
+  "color":"0xffffff",
+  "child":[
+    {
+      "text":"봄",
+      "x":"200",
+      "y":"200",
+      "width":"100",
+      "height":"50",
+      "color":"0xffffff",
+      "child":[
+        {
+          "text": "황사",
+          "x": "200",
+          "y": "200",
+          "width": "100",
+          "height": "50",
+          "color": "0xffffff",
+          "child": [
+
+          ]
+        }
+      ]
+    },
+    {
+      "text":"여름",
+      "x":"200",
+      "y":"200",
+      "width":"100",
+      "height":"50",
+      "color":"0xffffff",
+      "child": [
+        {
+          "text": "태풍",
+          "x": "200",
+          "y": "200",
+          "width": "100",
+          "height": "50",
+          "color": "0xffffff",
+          "child": [
+
+          ]
+        },
+        {
+          "text": "장마",
+          "x": "200",
+          "y": "200",
+          "width": "100",
+          "height": "50",
+          "color": "0xffffff",
+          "child": [
+
+          ]
+        }
+      ]
+    },
+    {
+      "text":"가을",
+      "x":"200",
+      "y":"200",
+      "width":"100",
+      "height":"50",
+      "color":"0xffffff"
+    },
+    {
+      "text":"겨울",
+      "x":"200",
+      "y":"200",
+      "width":"100",
+      "height":"50",
+      "color":"0xffffff"
+    }
+
+  ]
+}

@@ -96,7 +96,6 @@ public class MindMap extends JFrame{
         toolbar.add(btn13);
         add(toolbar,BorderLayout.NORTH);
 
-
         setBounds(100, 100, 1000, 500);
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
