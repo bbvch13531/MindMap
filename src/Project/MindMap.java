@@ -16,7 +16,8 @@ public class MindMap extends JFrame{
         setTitle("Mind Map");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         createMenu();
-
+        setBounds(100, 100, 1000, 700);
+        setVisible(true);
     }
     void createMenu(){
         // Create MenuBar
@@ -35,7 +36,6 @@ public class MindMap extends JFrame{
         rightPane.setLeftComponent(leftPane);
         rightPane.setRightComponent(right);
 
-
     }
     class LeftPanel extends JPanel{
 
@@ -53,11 +53,12 @@ public class MindMap extends JFrame{
             JMenu title = new JMenu("Menu Bar");
             for(int i = 0; i < menuItem.length; i++){
                 menuItem[i] = new JMenuItem(itemTitle[i]); // 메뉴아이템 생성
-                menuItem[i].addActionListener(listener); // 메뉴아이템에 액션 리스너 등록.
+//                menuItem[i].addActionListener(listener); // 메뉴아이템에 액션 리스너 등록.
                 title.add(menuItem[i]);// 메뉴 아이템을 스크린 메뉴에 삽입
             }
             this.add(title);
             setJMenuBar(menuBar); // 메뉴바를 프레임에 부착.
+            setVisible(true);
         }
     }
     public static void main(String[] args){
