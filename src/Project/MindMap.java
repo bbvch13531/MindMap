@@ -2,6 +2,8 @@ package Project;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import com.google.gson.Gson;
 import java.io.*;
 import com.google.gson.JsonElement;
@@ -18,7 +20,7 @@ public class MindMap extends JFrame{
         setTitle("Mind Map");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        createMenu();
+        createLayout();
         setSize(1000,500);
         setLayout(new BorderLayout());
 
@@ -26,10 +28,12 @@ public class MindMap extends JFrame{
         add(rightPane);
         setVisible(true);
     }
-    void createMenu(){
+    void createLayout(){
         // Create MenuBar
         menuBar = new MenuBar(this);
 
+        // Create ToolBar
+        toolBar = new ToolBar();
         // Create Panels
         textEditor = new TextEditor();
         attribute = new Attribute();
@@ -51,6 +55,18 @@ public class MindMap extends JFrame{
 
         System.out.println("added");
     }
+    class ToolBar extends JToolBar{
+        String[] itemTitle = { "새로 만들기", "열기", "저장", "다른 이름으로 저장 ", "닫기", "적용", "변경" };
+        JButton[] barItem = new JButton[7];
+        ToolBar(){
+            for(int i=0; i <barItem.length ; i++) {
+                barItem[i] = new JButton(itemTitle[i]); // ¸Þ´º¾ÆÀÌÅÛ »ý¼º
+//            barItem[i].addActionListener(listener); 
+                this.add(barItem[i]);// ¸Þ´º ¾ÆÀÌÅÛÀ» ½ºÅ©¸° ¸Þ´º¿¡ »ðÀÔ
+            }
+        }
+//        add(this, BorderLayout.NORTH);
+    }
     class TextEditor extends JPanel{
         TextEditor(){
             JTextArea txtArea = new JTextArea(20,20);
@@ -69,12 +85,31 @@ public class MindMap extends JFrame{
         }
     }
     class Attribute extends JPanel{
-        JLabel label;
+        JPanel x,y,height,width;
         Attribute(){
-            setLayout(null);
-            label = new JLabel("hello");
-            add(label);
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+            x=createPanels("X");
+            y=createPanels("Y");
+            height=createPanels("Height");
+            width=createPanels("Width");
+            add(x);
+            add(y);
+            add(height);
+            add(width);
             setVisible(true);
+//            System.out.println("Label added in Attribute pane");
+        }
+        JPanel createPanels(String name){
+            JPanel panel = new JPanel();
+            JTextField status = new JTextField(10);
+            setLayout(new FlowLayout(FlowLayout.CENTER));
+            JLabel Pos = new JLabel(name);
+            Pos.setFont(new Font("a", Font.PLAIN, 20));
+            panel.add(Pos, FlowLayout.LEFT);
+            panel.add(status,BorderLayout.EAST);
+            setVisible(true);
+            return panel;
         }
     }
     class MenuBar extends JMenuBar{
@@ -115,7 +150,6 @@ public class MindMap extends JFrame{
                     "]" +
                     "}" +
                     "]";
-
 //            try{
 //                gson.newJsonReader(new FileReader("./MindMap.json"));
 //            } catch(Exception e){

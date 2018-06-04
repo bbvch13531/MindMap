@@ -197,7 +197,7 @@ public class MindMap extends JFrame{
         X() {
 
             LeftPane lp = new LeftPane();
-            setLayout(new FlowLayout(FlowLayout.CENTER));
+            setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
             add(new JLabel("X :"));
             add(new JTextField(String.valueOf(lp.xpos),5));
             setVisible(true);
@@ -218,7 +218,7 @@ public class MindMap extends JFrame{
     class H extends JPanel {
         H() {
             setLayout(new FlowLayout(FlowLayout.CENTER));
-            add(new JLabel("H :"));
+            add(new JLabel("Height :"));
             add(new JTextField(5));
             setVisible(true);
         }
@@ -227,7 +227,7 @@ public class MindMap extends JFrame{
     class W extends JPanel {
         W() {
             setLayout(new FlowLayout(FlowLayout.CENTER));
-            add(new JLabel("W :"));
+            add(new JLabel("Width :"));
             add(new JTextField(5));
             setVisible(true);
         }

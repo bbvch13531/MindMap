@@ -7,82 +7,89 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 class Node {
-    private String key;
-    private String value;
+    private String text,color;
+    private int x,y,width,height;
     private List<Node> child;
-    public String getKey(){
-        return key;
-    }
-    public String getValue(){
-        return value;
+
+    public String getText() {
+        return text;
     }
 
-    public List<Node> getNodes() {
+    public String getColor() {
+        return color;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public List<Node> getChild() {
         return child;
     }
 
-    public void setNodes(List<Node> child) {
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setChild(List<Node> child) {
         this.child = child;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 
     @Override
     public String toString(){
-        return "key = "+getKey()+", value = "+getValue();
+        return "text = "+getText()+", color = "+getColor()+", x = "+getX()+", y = "+getY();
     }
 }
 
 public class TestGson {
     TestGson() {
-        String input = "{" +
-                "\"data\":[" +
-                "{" +
-                "\"text\":\"계절\"," +
-                "\"child\":[" +
-                "{\"text\":\"여름\"," +
-                "\"child\":[" +
-                "{\"text\":\"태풍\",\"child\":[{}]}," +
-                "{\"text\":\"장마\",\"child\":[{}]}" +
-                "]" +
-                "}" +
-                "]" +
-                "}" +
-                "]";
-        String simpleInput="{\"data\":[\"a\":\"aa\",\"b\":\"bb\",\"c\":\"cc\"]}";
-        String simpleInput2="{" +
-                "\"key\":\"aa\"," +
-                "\"value\":\"aaa\"," +
-                "\"child\":[" +
-                    "{" +
-                    "\"key\":\"ab\"," +
-                    "\"value\":\"aab\"" +
-                    "}," +
-                    "{" +
-                    "\"key\":\"ac\"," +
-                    "\"value\":\"aac\"" +
-                    "}]" +
-                "}";
-        //            try{
-//                gson.newJsonReader(new FileReader("./MindMap.json"));
-//            } catch(Exception e){
-//                System.err.print(e);
-//            }
-        try {
-            Gson gson = new Gson();
-            Node obj = gson.fromJson(simpleInput2, Node.class);
-//            System.out.println(gson.toString());
-                System.out.println(obj.getNodes());
-        }catch(Exception e){
-            System.out.println(e);
-        }
+        Gson gson = new Gson();
 
+        try {
+//            gson.newJsonReader(new FileReader("./MindMap.json"));
+            JsonReader jsonReader = new JsonReader(new FileReader("/Users/kyungyoungheo/IdeaProjects/MindMap/src/Project/MindMap.json"));
+
+                Node obj = gson.fromJson(jsonReader, Node.class);
+                System.out.println(obj.getClass());
+                List <Node> child = obj.getChild();
+                for(int i=0;i<child.size();i++){
+                    System.out.println(child.get(i).toString());
+                }
+            }catch(Exception e){
+                System.out.println(e);
+        }
     }
     public static void main(String[] args){
         TestGson tg= new TestGson();
