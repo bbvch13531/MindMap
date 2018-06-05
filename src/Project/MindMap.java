@@ -5,7 +5,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import com.google.gson.Gson;
-import java.io.*;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
@@ -24,7 +23,8 @@ public class MindMap extends JFrame{
         setSize(1000,500);
         setLayout(new BorderLayout());
 
-        add(menuBar,"North");
+//        add(menuBar,"North");
+        add(toolBar,"North");
         add(rightPane);
         setVisible(true);
     }
@@ -61,7 +61,7 @@ public class MindMap extends JFrame{
         ToolBar(){
             for(int i=0; i <barItem.length ; i++) {
                 barItem[i] = new JButton(itemTitle[i]); // ¸Þ´º¾ÆÀÌÅÛ »ý¼º
-//            barItem[i].addActionListener(listener); 
+//            barItem[i].addActionListener(listener);
                 this.add(barItem[i]);// ¸Þ´º ¾ÆÀÌÅÛÀ» ½ºÅ©¸° ¸Þ´º¿¡ »ðÀÔ
             }
         }
