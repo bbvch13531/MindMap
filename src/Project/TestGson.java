@@ -3,13 +3,11 @@ import com.google.gson.Gson;
 import java.io.*;
 import java.util.List;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-class Node {
+class Node1 {
     private String text,color;
     private int x,y,width,height;
-    private List<Node> child;
+    private List<Node1> child;
 
     public String getText() {
         return text;
@@ -35,7 +33,7 @@ class Node {
         return height;
     }
 
-    public List<Node> getChild() {
+    public List<Node1> getChild() {
         return child;
     }
 
@@ -63,7 +61,7 @@ class Node {
         this.width = width;
     }
 
-    public void setChild(List<Node> child) {
+    public void setChild(List<Node1> child) {
         this.child = child;
     }
 
@@ -76,14 +74,14 @@ class Node {
 public class TestGson {
     TestGson() {
         Gson gson = new Gson();
-
+//        System.out.println(new File(".").getAbsolutePath());
         try {
 //            gson.newJsonReader(new FileReader("./MindMap.json"));
-            JsonReader jsonReader = new JsonReader(new FileReader("/Users/kyungyoungheo/IdeaProjects/MindMap/src/Project/MindMap.json"));
+                JsonReader jsonReader = new JsonReader(new FileReader("./src/Project/MindMap.json"));
 
-                Node obj = gson.fromJson(jsonReader, Node.class);
+                Node1 obj = gson.fromJson(jsonReader, Node1.class);
                 System.out.println(obj.getClass());
-                List <Node> child = obj.getChild();
+                List <Node1> child = obj.getChild();
                 for(int i=0;i<child.size();i++){
                     System.out.println(child.get(i).toString());
                 }

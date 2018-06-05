@@ -1,13 +1,17 @@
 package Project;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.Border;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
+import java.io.*;
+import java.util.List;
+
+import Project.EventListener;
+import org.w3c.dom.Text;
 
 public class MindMap extends JFrame{
     JSplitPane leftPane,rightPane;
@@ -29,27 +33,33 @@ public class MindMap extends JFrame{
         setVisible(true);
     }
     void createLayout(){
+        Dimension min = new Dimension(50, 50);
         // Create MenuBar
         menuBar = new MenuBar(this);
 
         // Create ToolBar
         toolBar = new ToolBar();
         // Create Panels
-        textEditor = new TextEditor();
-        attribute = new Attribute();
         draw = new DrawPanel();
+        textEditor = new TextEditor(draw);
+        attribute = new Attribute();
+
 
         leftPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         rightPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
-        leftPane.setLeftComponent(new JScrollPane(textEditor));
-        leftPane.setRightComponent(new JScrollPane(draw));
-        rightPane.setLeftComponent(leftPane);
-        rightPane.setRightComponent(attribute);
-
         leftPane.setContinuousLayout(true);
         rightPane.setContinuousLayout(true);
 
+        leftPane.setLeftComponent(new JScrollPane(textEditor));
+        leftPane.setRightComponent(new JScrollPane(draw));
+
+        rightPane.setLeftComponent(leftPane);
+        rightPane.setRightComponent(attribute);
+
+        rightPane.getRightComponent().setPreferredSize(min);
+
+        rightPane.setDividerLocation(0.8);
         leftPane.setDividerSize(5);
         rightPane.setDividerSize(5);
 
@@ -68,11 +78,19 @@ public class MindMap extends JFrame{
 //        add(this, BorderLayout.NORTH);
     }
     class TextEditor extends JPanel{
-        TextEditor(){
+        JPanel drawPanel;
+        TextEditor(JPanel drawPanel){
+            this.drawPanel=drawPanel;
             JTextArea txtArea = new JTextArea(20,20);
             setLayout(new FlowLayout(FlowLayout.CENTER));
+            JButton apply= new JButton("적용");
+            MyMouse mouse = new MyMouse(txtArea,drawPanel);
+            apply.addMouseListener(mouse);
+
             add(txtArea);
+            add(apply);
             setVisible(true);
+
         }
     }
     class DrawPanel extends JPanel{
@@ -80,6 +98,8 @@ public class MindMap extends JFrame{
         DrawPanel(){
             setLayout(null);
             label = new JLabel("hello");
+            label.setSize(100,50);
+            label.setLocation(200,200);
             add(label);
             setVisible(true);
         }
@@ -158,7 +178,23 @@ public class MindMap extends JFrame{
             Object obj = new Gson().fromJson(input,Object.class);
             System.out.println(obj);
         }
-
+    }
+    class MyMouse extends MouseAdapter{
+        JTextArea textArea;
+        JPanel drawPanel;
+        MyMouse(JTextArea t, JPanel p){
+            this.textArea=t;
+            this.drawPanel=p;
+        }
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            System.out.println(textArea.getText());
+            JLabel node1 = new JLabel(textArea.getText());
+            node1.setLocation(50,50);
+            node1.setSize(50,30);
+            drawPanel.add(node1);
+            drawPanel.setVisible(true);
+        }
     }
 }
 //  JSON parsing using gson
