@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.Border;
+import java.util.TreeMap;
 
 import com.google.gson.Gson;
 import java.io.*;
@@ -14,15 +15,17 @@ import Project.EventListener;
 import org.w3c.dom.Text;
 
 public class MindMap extends JFrame{
+
     JSplitPane leftPane,rightPane;
     JPanel textEditor,draw,attribute;
     JMenuBar menuBar;
     JToolBar toolBar;
+    TreeMap<Integer,Node> data;
 
     MindMap(){
         setTitle("Mind Map");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        data=new TreeMap<>();
         createLayout();
         setSize(1000,500);
         setLayout(new BorderLayout());
@@ -43,7 +46,6 @@ public class MindMap extends JFrame{
         draw = new DrawPanel();
         textEditor = new TextEditor(draw);
         attribute = new Attribute();
-
 
         leftPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         rightPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -82,6 +84,7 @@ public class MindMap extends JFrame{
         TextEditor(JPanel drawPanel){
             this.drawPanel=drawPanel;
             JTextArea txtArea = new JTextArea(20,20);
+            txtArea.setTabSize(4);
             setLayout(new FlowLayout(FlowLayout.CENTER));
             JButton apply= new JButton("적용");
             MyMouse mouse = new MyMouse(txtArea,drawPanel);
@@ -188,12 +191,46 @@ public class MindMap extends JFrame{
         }
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println(textArea.getText());
+            int head=0,tail=0;
+            String rawText=null;
+//            System.out.println(textArea.getText());
             JLabel node1 = new JLabel(textArea.getText());
             node1.setLocation(50,50);
             node1.setSize(50,30);
             drawPanel.add(node1);
             drawPanel.setVisible(true);
+
+            //여기에 text to Gson 을 구현
+            for(int i=0;i<textArea.getLineCount();i++){
+                Node data1=new Node();
+                try{
+                    head = textArea.getLineStartOffset(i);
+                    tail = textArea.getLineEndOffset(i);
+                    rawText=textArea.getText(head,tail-head);
+                    StringBuffer buf=new StringBuffer(rawText);
+                    buf=buf.deleteCharAt(buf.length()-1);
+                    rawText= new String(buf);
+
+                } catch(Exception ex){
+                    System.err.print("lineOffset Exception");
+                }
+                // 1.textArea에서 Line마다 text가져옴
+                // 2. 가져온 text로 data1.setText()
+                // 3. Node tp Gson
+                data1.setColor("0xff");
+                data1.setX(i*50);
+                data1.setY(i*100);
+                data1.setHeight(50);
+                data1.setWidth(100);
+
+                System.out.printf("head: %d, tail: %d, len: %d %s\n",head,tail,rawText.length(),rawText);
+                data1.setText(rawText);
+                data.put(i,data1);
+                Gson gson=new Gson();
+                String json = gson.toJson(data);
+                System.out.println(json);
+            }
+
         }
     }
 }
