@@ -8,19 +8,18 @@ import javax.swing.border.Border;
 
 import com.google.gson.Gson;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
-import Project.EventListener;
-import org.w3c.dom.Text;
-
+import Project.FuncActionListener;
 public class MindMap extends JFrame{
 
     JSplitPane leftPane,rightPane;
-    JPanel textEditor,draw,attribute;
+    DrawPanel draw;
+    Attribute attribute;
+    TextEditor textEditor;
     JMenuBar menuBar;
     JToolBar toolBar;
     Node root;
+    FuncActionListener funcActionListener;
 
     MindMap(){
         setTitle("Mind Map");
@@ -37,15 +36,19 @@ public class MindMap extends JFrame{
     }
     void createLayout(){
         Dimension min = new Dimension(50, 50);
-        // Create MenuBar
-        menuBar = new MenuBar(this);
 
-        // Create ToolBar
-        toolBar = new ToolBar();
         // Create Panels
         draw = new DrawPanel();
         textEditor = new TextEditor(draw);
         attribute = new Attribute();
+
+        funcActionListener = new FuncActionListener(this,textEditor.getTextArea(),root);
+
+        // Create ToolBar
+        toolBar = new ToolBar();
+
+        // Create MenuBar
+        menuBar = new MenuBar(this);
 
         leftPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         rightPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -70,10 +73,12 @@ public class MindMap extends JFrame{
     class ToolBar extends JToolBar{
         String[] itemTitle = { "새로 만들기", "열기", "저장", "다른 이름으로 저장 ", "닫기", "적용", "변경" };
         JButton[] barItem = new JButton[7];
+//        FuncActionListener funcActionListener = new
+        // Action 구현해서 붙여야 함!
         ToolBar(){
-            for(int i=0; i <barItem.length ; i++) {
+            for(int i=0; i <barItem.length; i++) {
                 barItem[i] = new JButton(itemTitle[i]); // ¸Þ´º¾ÆÀÌÅÛ »ý¼º
-//            barItem[i].addActionListener(listener);
+                barItem[i].addActionListener(funcActionListener);
                 this.add(barItem[i]);// ¸Þ´º ¾ÆÀÌÅÛÀ» ½ºÅ©¸° ¸Þ´º¿¡ »ðÀÔ
             }
         }
@@ -81,9 +86,10 @@ public class MindMap extends JFrame{
     }
     class TextEditor extends JPanel{
         JPanel drawPanel;
+        JTextArea txtArea;
         TextEditor(JPanel drawPanel){
             this.drawPanel=drawPanel;
-            JTextArea txtArea = new JTextArea(20,20);
+            txtArea = new JTextArea(20,20);
             txtArea.setTabSize(4);
             setLayout(new FlowLayout(FlowLayout.CENTER));
             JButton apply= new JButton("적용");
@@ -94,6 +100,9 @@ public class MindMap extends JFrame{
             add(apply);
             setVisible(true);
 
+        }
+        JTextArea getTextArea(){
+            return this.txtArea;
         }
     }
     class DrawPanel extends JPanel{
@@ -231,12 +240,10 @@ public class MindMap extends JFrame{
                 System.out.printf("head: %d, tail: %d, len: %d %s\n",head,tail,rawText.length(),rawText);
 //                data1.setText(rawText);
 //                root.addChild(data1);
-
                 // tab 갯수 count해서 알맞은 깊이에 Node 추가
                 if(!rawText.contains("\t")) j++;
                 while(rawText.contains("\t")) {
                     cur = parent.getChild().get(j);
-
                     StringBuffer buf = new StringBuffer(rawText);
                     buf.deleteCharAt(0);
                     rawText = new String(buf);
@@ -244,12 +251,25 @@ public class MindMap extends JFrame{
                 }
                 data1.setText(rawText);
                 parent.addChild(data1);
-                
             }
             Gson gson=new Gson();
             String json = gson.toJson(root);
             System.out.println(json);
+
+            try {
+                //write converted json data to a file named "CountryGSON.json"
+                FileWriter writer = new FileWriter("./src/Project/GsonTest1.json");
+                writer.write(json);
+                writer.close();
+
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            funcActionListener.setRoot(root);
         }
+        // Gjson 을 파일에 저장
+        // Gjson 파일 불러오기
+        // Node Tree를 이용해서 drawPane 그리기
     }
 }
 //  JSON parsing using gson
