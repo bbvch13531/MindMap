@@ -1,11 +1,19 @@
 package Project;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
     private String text,color;
     private int x,y,width,height;
-
+    private ArrayList<Node> child;
+    Node(){
+        child=new ArrayList<>();
+    }
+    Node(String text){
+        this.text=text;
+        child=new ArrayList<>();
+    }
     public String getText() { return text; }
 
     public String getColor() { return color; }
@@ -17,6 +25,8 @@ public class Node {
     public int getWidth() { return width; }
 
     public int getHeight() { return height; }
+
+    public ArrayList<Node> getChild(){ return this.child; }
 
     public void setText(String text) { this.text = text; }
 
@@ -30,6 +40,7 @@ public class Node {
 
     public void setWidth(int width) { this.width = width; }
 
+    public void addChild(Node child) { this.child.add(child); }
     @Override
     public String toString(){
         return "text = "+getText()+", color = "+getColor()+", x = "+getX()+", y = "+getY();

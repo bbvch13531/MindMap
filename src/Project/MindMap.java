@@ -5,10 +5,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.Border;
-import java.util.TreeMap;
 
 import com.google.gson.Gson;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import Project.EventListener;
@@ -20,12 +20,12 @@ public class MindMap extends JFrame{
     JPanel textEditor,draw,attribute;
     JMenuBar menuBar;
     JToolBar toolBar;
-    TreeMap<Integer,Node> data;
+    Node root;
 
     MindMap(){
         setTitle("Mind Map");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        data=new TreeMap<>();
+        root= new Node();
         createLayout();
         setSize(1000,500);
         setLayout(new BorderLayout());
@@ -201,7 +201,11 @@ public class MindMap extends JFrame{
             drawPanel.setVisible(true);
 
             //여기에 text to Gson 을 구현
+            Node parent, cur;
+            parent=cur=root;
+            int j=-1;
             for(int i=0;i<textArea.getLineCount();i++){
+                parent=root;
                 Node data1=new Node();
                 try{
                     head = textArea.getLineStartOffset(i);
@@ -217,6 +221,7 @@ public class MindMap extends JFrame{
                 // 1.textArea에서 Line마다 text가져옴
                 // 2. 가져온 text로 data1.setText()
                 // 3. Node tp Gson
+
                 data1.setColor("0xff");
                 data1.setX(i*50);
                 data1.setY(i*100);
@@ -224,13 +229,26 @@ public class MindMap extends JFrame{
                 data1.setWidth(100);
 
                 System.out.printf("head: %d, tail: %d, len: %d %s\n",head,tail,rawText.length(),rawText);
-                data1.setText(rawText);
-                data.put(i,data1);
-                Gson gson=new Gson();
-                String json = gson.toJson(data);
-                System.out.println(json);
-            }
+//                data1.setText(rawText);
+//                root.addChild(data1);
 
+                // tab 갯수 count해서 알맞은 깊이에 Node 추가
+                if(!rawText.contains("\t")) j++;
+                while(rawText.contains("\t")) {
+                    cur = parent.getChild().get(j);
+
+                    StringBuffer buf = new StringBuffer(rawText);
+                    buf.deleteCharAt(0);
+                    rawText = new String(buf);
+                    parent=cur;
+                }
+                data1.setText(rawText);
+                parent.addChild(data1);
+                
+            }
+            Gson gson=new Gson();
+            String json = gson.toJson(root);
+            System.out.println(json);
         }
     }
 }
